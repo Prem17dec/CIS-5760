@@ -1,0 +1,122 @@
+Warrensburg Clothing Store — Full Command Guide
+================================================
+
+1. Open Terminal
+----------------
+Use any method:
+- Cmd + Space → type “Terminal” → press Enter
+- Or open via Applications → Utilities → Terminal
+
+2. Navigate to Project Folder
+-----------------------------
+cd ~/Desktop/online-clothing-store
+
+3. Start Each Service Manually (3 Terminals)
+--------------------------------------------
+
+A. Customer Service (Spring Boot Backend for Users)
+---------------------------------------------------
+cd ~/Desktop/online-clothing-store/customer-service
+mvn spring-boot:run
+- Starts backend on port 8082
+- Manages users, logins, and authentication
+
+B. Product Service (Spring Boot Backend for Products & Cart)
+------------------------------------------------------------
+cd ~/Desktop/online-clothing-store/product-service
+mvn spring-boot:run
+- Starts backend on port 8081
+- Handles products, cart, and admin functions
+
+C. Clothing UI (React Frontend)
+-------------------------------
+cd ~/Desktop/online-clothing-store/clothing-ui
+npm install   # only first time or after pulling new changes
+npm start
+- Starts React app on http://localhost:3000
+
+4. Login Credentials
+--------------------
+Admin:
+  Email: admin@wcs.com
+  Password: admin123
+
+Customer:
+  Any new email + password (auto-registers)
+
+5. Access H2 Database Consoles
+------------------------------
+Customer DB:
+  http://localhost:8082/h2-console
+  JDBC URL: jdbc:h2:file:/Users/<your_username>/customerdb
+  User: sa
+  Password: (leave blank)
+
+Product DB:
+  http://localhost:8081/h2-console
+  JDBC URL: jdbc:h2:file:/Users/<your_username>/productdb
+  User: sa
+  Password: (leave blank)
+
+6. Common SQL Queries for Demo
+------------------------------
+Customer DB:
+  SHOW TABLES;
+  SELECT * FROM CUSTOMER;
+
+Product/Cart DB:
+  SHOW TABLES;
+  SELECT * FROM PRODUCT;
+  SELECT * FROM CART;
+  SELECT * FROM CART_ITEM;
+
+7. Stop Running Servers
+-----------------------
+Press Ctrl + C in each terminal tab.
+
+8. If a Port Is Already in Use
+------------------------------
+lsof -i :8081
+kill -9 <PID>
+lsof -i :8082
+kill -9 <PID>
+
+9. Reset Databases (If Needed)
+------------------------------
+rm ~/customerdb.mv.db
+rm ~/productdb.mv.db
+
+10. Run All Automatically (Optional)
+------------------------------------
+cd ~/Desktop/online-clothing-store
+touch run-all.sh
+code run-all.sh
+
+Paste this:
+#!/bin/bash
+echo "🚀 Starting Warrensburg Clothing Store stack..."
+
+osascript -e 'tell application "Terminal"
+    do script "cd ~/Desktop/online-clothing-store/customer-service && mvn spring-boot:run"
+end tell'
+
+osascript -e 'tell application "Terminal"
+    do script "cd ~/Desktop/online-clothing-store/product-service && mvn spring-boot:run"
+end tell'
+
+osascript -e 'tell application "Terminal"
+    do script "cd ~/Desktop/online-clothing-store/clothing-ui && npm start"
+end tell'
+
+echo "✅ All services launched — wait for servers to start!"
+
+Make it executable:
+chmod +x run-all.sh
+
+Run it anytime:
+./run-all.sh
+
+11. To Zip the Project (for Email or Backup)
+--------------------------------------------
+cd ~/Desktop
+zip -r online-clothing-store.zip online-clothing-store

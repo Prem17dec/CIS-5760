@@ -1,0 +1,10 @@
+com/clothing/product/ProductRepository.class
+com/clothing/product/ProductDataLoader.class
+com/clothing/product/CartItem.class
+com/clothing/product/CartRepository.class
+com/clothing/product/CartController.class
+com/clothing/product/ProductController.class
+com/clothing/product/ProductServiceApplication.class
+com/clothing/product/Cart.class
+com/clothing/product/CartController$AddItemRequest.class
+com/clothing/product/Product.class

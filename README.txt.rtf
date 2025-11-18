@@ -1,0 +1,94 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 ==============================================\
+Warrensburg Clothing Store\
+==============================================\
+\
+A full-stack web project using:\
+- React (Frontend)\
+- Spring Boot (Backend)\
+- H2 Database (SQL in file mode)\
+- RESTful Microservices\
+\
+----------------------------------------------\
+\uc0\u55358 \u56809  Structure\
+----------------------------------------------\
+online-clothing-store/\
+\uc0\u9500 \u9472 \u9472  clothing-ui/          (React frontend)\
+\uc0\u9500 \u9472 \u9472  customer-service/     (Spring Boot backend for users)\
+\uc0\u9492 \u9472 \u9472  product-service/      (Spring Boot backend for products & cart)\
+\
+----------------------------------------------\
+\uc0\u9881 \u65039  Requirements\
+----------------------------------------------\
+- Java 21+\
+- Maven 3.9+\
+- Node.js 18+\
+- npm\
+\
+----------------------------------------------\
+\uc0\u55357 \u56960  How to Run\
+----------------------------------------------\
+1\uc0\u65039 \u8419  Open three terminal windows.\
+\
+\uc0\u55358 \u56991  Terminal 1 \'96 Customer Service:\
+cd customer-service\
+mvn spring-boot:run\
+\
+\uc0\u55358 \u56991  Terminal 2 \'96 Product Service:\
+cd product-service\
+mvn spring-boot:run\
+\
+\uc0\u55358 \u56991  Terminal 3 \'96 React Frontend:\
+cd clothing-ui\
+npm install\
+npm start\
+\
+----------------------------------------------\
+\uc0\u55357 \u56593  Login Information\
+----------------------------------------------\
+Admin Login:\
+  Email: admin@wcs.com\
+  Password: admin123\
+\
+Customer Login:\
+  Use ANY email and password (auto-registers a new customer)\
+\
+----------------------------------------------\
+\uc0\u55357 \u56771 \u65039  H2 Database Consoles\
+----------------------------------------------\
+Customers DB:\
+  URL: http://localhost:8082/h2-console\
+  JDBC URL: jdbc:h2:file:/Users/<YOUR_USERNAME>/customerdb\
+  User: sa\
+  Password: (blank)\
+\
+Products & Cart DB:\
+  URL: http://localhost:8081/h2-console\
+  JDBC URL: jdbc:h2:file:/Users/<YOUR_USERNAME>/productdb\
+  User: sa\
+  Password: (blank)\
+\
+----------------------------------------------\
+\uc0\u55357 \u56522  Useful SQL Commands\
+----------------------------------------------\
+-- Customer Service (8082)\
+SELECT ID, NAME, EMAIL, ROLE FROM CUSTOMER ORDER BY ID DESC;\
+\
+-- Product Service (8081)\
+SELECT ID, NAME, PRICE, STOCK FROM PRODUCT ORDER BY ID;\
+SELECT * FROM CART_ITEM;\
+SELECT * FROM CART;\
+\
+----------------------------------------------\
+\uc0\u55358 \u56830  Notes\
+----------------------------------------------\
+- H2 stores data on disk so your data persists between restarts.\
+- If H2 breaks, delete customerdb.mv.db or productdb.mv.db and rerun.\
+- Frontend will auto-refresh as you change backend data.\
+}

@@ -1,0 +1,10 @@
+com/clothing/customer/dto/AuthDtos$LoginResponse.class
+com/clothing/customer/DataLoader.class
+com/clothing/customer/Customer.class
+com/clothing/customer/dto/AuthDtos.class
+com/clothing/customer/CustomerController.class
+com/clothing/customer/CustomerServiceApplication.class
+com/clothing/customer/CustomerRepository.class
+com/clothing/customer/AuthController.class
+com/clothing/customer/dto/AuthDtos$RegisterRequest.class
+com/clothing/customer/dto/AuthDtos$LoginRequest.class
