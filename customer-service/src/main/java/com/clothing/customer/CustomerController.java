@@ -1,33 +1,29 @@
 package com.clothing.customer;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin(origins = "*")
 public class CustomerController {
-    private final CustomerRepository repo;
-    public CustomerController(CustomerRepository repo) { this.repo = repo; }
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    // This endpoint now requires the user to be authenticated and have the 'ADMIN' role.
     @GetMapping
-    public List<Customer> getAll() { return repo.findAll(); }
-
-    @GetMapping("/{id}")
-    public Optional<Customer> getOne(@PathVariable Long id) { return repo.findById(id); }
-
-    @PostMapping
-    public Customer create(@RequestBody Customer c) { return repo.save(c); }
-
-    @PutMapping("/{id}")
-    public Customer update(@PathVariable Long id, @RequestBody Customer c) {
-        Customer existing = repo.findById(id).orElseThrow();
-        existing.setName(c.getName());
-        existing.setEmail(c.getEmail());
-        return repo.save(existing);
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<List<String>> getAllCustomerEmails() {
+        List<String> emails = customerRepository.findAll().stream()
+                .map(Customer::getEmail) // FIX: Changed from getName() to getEmail()
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(emails);
     }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) { repo.deleteById(id); }
 }

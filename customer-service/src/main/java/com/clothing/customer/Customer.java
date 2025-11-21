@@ -3,38 +3,52 @@ package com.clothing.customer;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     @Column(unique = true, nullable = false)
     private String email;
 
-    // Store BCrypt hash, never the plain password
     @Column(nullable = false)
-    private String passwordHash;
+    private String password; // Stored as BCrypt hash
 
-    // "ADMIN" or "CUSTOMER"
-    @Column(nullable = false)
-    private String role = "CUSTOMER";
+    private String role; // e.g., "ROLE_USER" or "ROLE_ADMIN"
 
-    // ---- getters & setters ----
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // --- Getters and Setters ---
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

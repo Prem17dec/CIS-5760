@@ -1,24 +1,37 @@
 package com.clothing.customer;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Component
-public class DataLoader implements CommandLineRunner {
-    @Autowired CustomerRepository repo;
+@Configuration
+public class DataLoader {
 
-    @Override
-    public void run(String... args) {
-        // Seed ONLY the admin account
-        repo.findByEmail("admin@wcs.com").orElseGet(() -> {
-            Customer a = new Customer();
-            a.setName("Store Admin");
-            a.setEmail("admin@wcs.com");
-            a.setPasswordHash(BCrypt.hashpw("admin123", BCrypt.gensalt()));
-            a.setRole("ADMIN");
-            return repo.save(a);
-        });
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // Inject the password encoder
+
+    @PostConstruct
+    public void init() {
+        if (customerRepository.count() == 0) {
+            // Admin User
+            Customer admin = new Customer();
+            admin.setEmail("admin@example.com"); // FIX: Changed setName to setEmail
+            admin.setPassword(passwordEncoder.encode("password")); // FIX: Changed setPasswordHash to setPassword and encoded
+            admin.setRole("ROLE_ADMIN");
+            customerRepository.save(admin);
+
+            // Regular User
+            Customer user = new Customer();
+            user.setEmail("user@example.com"); // FIX: Changed setName to setEmail
+            user.setPassword(passwordEncoder.encode("password")); // FIX: Changed setPasswordHash to setPassword and encoded
+            user.setRole("ROLE_USER");
+            customerRepository.save(user);
+
+            System.out.println("Initialized Admin and Regular User accounts.");
+        }
     }
 }
